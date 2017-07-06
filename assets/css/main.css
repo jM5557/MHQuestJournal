@@ -1,0 +1,296 @@
+@import url("https://fonts.googleapis.com/css?family=Karla|Roboto|Josefin+Sans");
+body {
+  background-color: #f9f9f9;
+  background: url("../images/bg_2.png") repeat center center;
+  font-family: 'Karla', sans-serif; }
+
+* {
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 0px; }
+
+#scroll_top_btn {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  opacity: 0.65;
+  text-align: center;
+  display: none; }
+
+#scroll_top_btn:hover {
+  opacity: 1; }
+
+button {
+  background-color: #684f22;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border: none;
+  border-radius: 1.5px;
+  color: #f9f9f9;
+  cursor: pointer; }
+
+#main_wrapper {
+  text-align: center;
+  max-width: 1440px;
+  margin: auto; }
+  #main_wrapper section {
+    display: block;
+    vertical-align: top;
+    padding: 2.5rem; }
+    @media all and (max-width: 910px) {
+      #main_wrapper section {
+        display: block;
+        max-width: 100%;
+        padding: 1.15rem 0.25rem; } }
+
+ol, ul {
+  list-style-type: none; }
+  ol li, ul li {
+    text-align: left; }
+
+#game_select_wrapper {
+  text-align: center;
+  border-bottom: solid thin #9e8a68; }
+  #game_select_wrapper button {
+    padding: 0.75rem;
+    min-width: 250px;
+    display: block;
+    margin: 7px auto; }
+  #game_select_wrapper button.selected {
+    background: #684f22 url("../images/guild_crest.png") no-repeat right 10px center;
+    background-size: contain; }
+
+#user_content_wrapper {
+  padding: 2.5rem;
+  text-align: left;
+  margin-left: 100px; }
+  @media all and (max-width: 910px) {
+    #user_content_wrapper {
+      margin-top: 75px;
+      margin-left: auto; } }
+
+#clear_all_button,
+#clear_all_search_results_button,
+#game_select_wrapper button {
+  padding: 15px;
+  display: block;
+  margin: 0.75rem auto;
+  width: 100%;
+  font-size: 15pt; }
+  @media all and (max-width: 910px) {
+    #clear_all_button,
+    #clear_all_search_results_button,
+    #game_select_wrapper button {
+      width: auto;
+      min-width: 90%; } }
+
+.item_list {
+  max-height: 750px;
+  overflow: auto;
+  padding-bottom: 15px; }
+  .item_list li {
+    position: relative;
+    padding: 5px;
+    margin: 2.5px;
+    background: url("../images/line_top.png") repeat-x top 5px center;
+    border: solid thin #684f22;
+    cursor: pointer; }
+    .item_list li p.name {
+      font-style: italic; }
+    .item_list li button {
+      border: none;
+      position: absolute;
+      top: -1px;
+      right: 0px;
+      padding-left: 15px;
+      padding-right: 15px;
+      height: calc(100% + 2px);
+      background-color: #684f22;
+      font-size: 1.35rem;
+      border: solid thin #684f22;
+      -webkit-box-shadow: -1px 0px 0.45px #CDCDCD;
+      box-shadow: -1px 0px 0.45px #CDCDCD;
+      border-radius: 0px;
+      border-top-right-radius: inherit;
+      border-bottom-right-radius: inherit;
+      color: #f9f9f9 !important; }
+  .item_list .questClear {
+    background: url("../images/quest_clear.png") no-repeat right 45px center, #9e887c url("../images/line_top.png") repeat-x top 5px center;
+    background-size: 125px auto, auto;
+    color: #f9f9f9; }
+    .item_list .questClear p.name {
+      color: #f9f9f9; }
+    .item_list .questClear button {
+      -webkit-box-shadow: -1px 0px 0.45px #473838;
+      box-shadow: -1px 0px 0.45px #473838; }
+  @media all and (max-width: 910px) {
+    .item_list {
+      display: block;
+      max-width: 95%;
+      margin: auto; } }
+
+.error_message {
+  color: crimson; }
+
+section {
+  text-align: left; }
+
+h1 {
+  font-family: 'Josefin Sans', sans-serif;
+  text-shadow: none;
+  font-weight: normal;
+  padding-top: 7.5px;
+  padding-bottom: 7.5px; }
+  h1 img {
+    width: 50px;
+    vertical-align: middle;
+    margin: 10px; }
+
+#toggle_sidebar {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 57; }
+
+#search_wrapper #search_bar {
+  display: block;
+  max-width: 90%;
+  width: 90%;
+  margin: auto;
+  margin-bottom: 15px;
+  border: none;
+  border-bottom: solid 3px #726451;
+  background-color: #f9f9f9;
+  background: url("../images/bg_3.jpg") repeat center center;
+  padding: 7.5px 3.5px 3.5px 3.5px;
+  font-size: 13pt;
+  color: #f9f9f9; }
+
+#search_wrapper #search_bar:focus {
+  border-bottom-color: #d57a66;
+  outline: none; }
+
+#search_wrapper ul {
+  max-height: 450px; }
+
+#display_quests_container.display {
+  width: 35px;
+  cursor: pointer; }
+  #display_quests_container.display h1 {
+    border: none;
+    margin-left: -30px; }
+  #display_quests_container.display img {
+    margin: 15px;
+    display: inline-block; }
+  #display_quests_container.display #search_wrapper {
+    display: none; }
+  @media all and (max-width: 910px) {
+    #display_quests_container.display {
+      height: 60px;
+      width: 100%;
+      text-align: center; }
+      #display_quests_container.display h1 {
+        display: inline-block;
+        margin: -15px 15px; }
+        #display_quests_container.display h1 img {
+          max-width: 45px; } }
+
+#display_quests_container {
+  position: fixed;
+  background-color: #f9f9f9;
+  background: url("../images/bg_3.jpg") repeat center center;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  z-index: 3;
+  width: 350px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  -webkit-transition: width 0.45s ease;
+  transition: width 0.45s ease;
+  cursor: default;
+  overflow-y: auto;
+  text-align: left;
+  color: #f9f9f9; }
+  #display_quests_container li {
+    border: solid thin #726451; }
+  #display_quests_container img {
+    margin: auto 15px;
+    display: inline-block; }
+  #display_quests_container #close_sidebar_button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    min-width: 20px;
+    padding-left: 7.5px;
+    padding-right: 7.5px;
+    height: 35px;
+    color: #f9f9f9;
+    font-size: 18pt; }
+  #display_quests_container .item_list {
+    max-height: 600px; }
+  @media all and (max-width: 910px) {
+    #display_quests_container {
+      width: 100%;
+      height: 100%;
+      -webkit-transition: height 0.55s ease;
+      transition: height 0.55s ease; } }
+
+.quest_added_alert {
+  background-color: #684f22;
+  padding: 15px;
+  text-align: center;
+  -webkit-box-shadow: 3px 1px 3px -3px #333;
+  box-shadow: 3px 1px 3px -3px #333;
+  position: fixed;
+  top: auto;
+  left: auto;
+  bottom: 15px;
+  right: 5px;
+  color: #f9f9f9;
+  min-width: 350px;
+  border-radius: 3px;
+  opacity: 1;
+  -webkit-transition: bottom 0.5s ease, opacity 0.5s ease;
+  transition: bottom 0.5s ease, opacity 0.5s ease;
+  -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  z-index: 100; }
+
+.added {
+  opacity: 0;
+  bottom: -15px; }
+
+.removed {
+  bottom: -15px;
+  opacity: 0; }
+
+@media all and (max-width: 910px) {
+  body {
+    position: relative; }
+  .quest_added_alert {
+    background-color: #684f22;
+    padding: 25px 0px;
+    text-align: center;
+    position: fixed;
+    top: 0px;
+    right: auto;
+    left: 0px;
+    color: #f9f9f9;
+    min-width: 100%;
+    border-radius: 0px;
+    opacity: 1;
+    -webkit-transition: top 0.5s ease, opacity 0.5s ease;
+    transition: top 0.5s ease, opacity 0.5s ease;
+    font-size: 17pt;
+    max-height: 40px; }
+  .added {
+    opacity: 0;
+    top: -15px; }
+  .removed {
+    top: -15px;
+    opacity: 0; } }
