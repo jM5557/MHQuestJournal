@@ -1,0 +1,29 @@
+{
+  "name": "mhquestjournalreact",
+  "version": "1.0.0",
+  "description": "A todo app for Monster Hunter Generations that lets you plan out the quests you are planning on taking.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"hello, world\""
+  },
+  "author": "Javier Minchala",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-tinypng": "^1.0.2",
+    "gulp-uglify": "^3.0.0"
+  },
+  "dependencies": {
+    "pump": "^1.0.2",
+    "sqlite-to-json": "^0.1.3"
+  }
+}
