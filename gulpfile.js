@@ -35,7 +35,7 @@ gulp.task("sass", function () {
 gulp.task("js", function () {
 	return gulp.src('./src/js/**/*.js')
 		.pipe(babel({
-			presets: ['es2015', 'react']
+			presets: ['env', 'react']
 		}))
 		.pipe(concat('main.js'))
 		.pipe(gulp.dest('./dist/assets/js'));

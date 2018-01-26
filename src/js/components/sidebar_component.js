@@ -8,7 +8,6 @@ var sidebarItemComponent = function (iconImagePath, MyComp, label, num) {
 		render : function () {
 			return (<div className = {"image_icon_wrapper " + (this.props.selected ? 'selected' : null)} onClick = { this.handleIconClick.bind(this, MyComp, num) }>
 				<img alt = { iconImagePath } src = { "assets/images/" + iconImagePath } />
-					<br />
 				<p>{ label }</p>
 			</div>);
 		}
@@ -52,10 +51,10 @@ var SidebarComponent = React.createClass({
 			<ItemOneWrapper selected = { (this.state.selectedButton == 1) ? true : false} handleIconClick = {this.handleIconClick} />
 			<ItemTwoWrapper selected = { (this.state.selectedButton == 2) ? true : false} handleIconClick = {this.handleIconClick} />
 			<ItemThreeWrapper selected = { (this.state.selectedButton == 3) ? true : false} handleIconClick = {this.handleIconClick} />
+			
 			<div className = "image_icon_wrapper">
 				<a href = "https://github.com/jM5557/MHQuestJournal">
 					<img alt = "jM5557 github repo link icon" src = "assets/images/github-icon-white.png" />
-						<br />
 					<p>Github Repo</p>
 				</a>
 			</div>

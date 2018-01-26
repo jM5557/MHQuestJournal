@@ -31,7 +31,8 @@ var AllQuestsWrapper = React.createClass({
 
 			return (<li key = {quest._id}  onClick = { this.handleClick.bind(this, quest) }>
 				<p className = "name">{ quest.name }</p>
-				{quest.target} | { quest.stars } &#9734;
+				<span className = "target">{ quest.target }</span>
+					<span className = "star-num">{ quest.stars } &#9734;</span>
 			</li>);
 		}, this);
 
@@ -116,7 +117,8 @@ var SearchQuests = React.createClass({
 			return (
 				<li onClick = { this.handleClick.bind(this, quest) } key = {quest.id}>
 					<p className = "name">{ quest.name }</p>
-					{ quest.target } | { quest.stars } &#9734;
+					<span className = "target">{ quest.target }</span>
+					<span className = "star-num">{ quest.stars } &#9734;</span>
 				</li>
 			);
 		}, this);

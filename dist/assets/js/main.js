@@ -8543,17 +8543,7 @@ var quests_mh4u = {
 "use strict";
 
 window.onload = function () {
-	document.getElementById("loading_wrapper").remove();
-
 	ReactDOM.render(React.createElement(MyQuestsWrapper, null), document.getElementById("root"));
-
-	document.getElementById("scroll_top_btn").addEventListener("click", function () {
-		document.body.scrollTop = document.documentElement.scrollTop = 0;
-	}, null);
-};
-
-window.onscroll = function () {
-	document.getElementById("scroll_top_btn").style.display = document.body.scrollTop < 250 ? "none" : "block";
 };
 "use strict";
 
@@ -8568,15 +8558,20 @@ var MyQuestsWrapper = React.createClass({
 			"selectedGameList": 0,
 			"doClearSearch": false,
 			"currentDisplayedQuests": [],
-			"currentFilter": "none"
+			"currentFilter": "none",
+			"displayFilterOptions": false
 		};
 
+		// Gets stored quest list if they exist
 		var m = JSON.parse(localStorage.getItem("mh_quest_journal_react"));
 
+		// Assigns an id to each quest in each list
+		//
+		// m[0] is the MH Gen quest list 
 		for (var i in m[0]) {
 			m[0][i].specialUniqueID = i;
 		}
-
+		// m[1] is the MH4U quest list
 		for (var _i in m[1]) {
 			m[1][_i].specialUniqueID = _i;
 		}
@@ -8587,7 +8582,8 @@ var MyQuestsWrapper = React.createClass({
 			"selectedGameList": 0,
 			"doClearSearch": false,
 			"currentDisplayedQuests": m[0],
-			"currentFilter": "none"
+			"currentFilter": "none",
+			"displayFilterOptions": false
 		};
 	},
 
@@ -8603,24 +8599,21 @@ var MyQuestsWrapper = React.createClass({
 		document.body.appendChild(added_alert);
 
 		setTimeout(function () {
-			added_alert.className = "quest_added_alert";
-		}, 350);
-
-		setTimeout(function () {
-			//show any `removed` style
-			added_alert.className = "quest_added_alert removed";
-
 			//remove element from DOM
-			setTimeout(function () {
-				added_alert.remove();
-			}, 650);
-		}, 1500);
+			added_alert.remove();
+		}, 2000);
+	},
+
+	toggleFilterOptions: function toggleFilterOptions() {
+		this.setState({
+			displayFilterOptions: !this.state.displayFilterOptions
+		});
 	},
 
 	getFilteredQuestList: function getFilteredQuestList() {
 		var currFilter = this.state.currentFilter;
 
-		return this.state.myQuests[this.state.selectedGameList].filter(function (q) {
+		var t = this.state.myQuests[this.state.selectedGameList].filter(function (q) {
 			if (currFilter == "none")
 				//gets ALL the quests without filtering
 				return parseInt(q.stars) >= 0;
@@ -8628,6 +8621,12 @@ var MyQuestsWrapper = React.createClass({
 			//gets quests with a star difficulty matching the current filter value
 			return q.stars == currFilter;
 		});
+
+		this.setState({
+			currentDisplayedQuests: t
+		});
+
+		return t;
 	},
 
 	filterQuestList: function filterQuestList(filter) {
@@ -8636,12 +8635,12 @@ var MyQuestsWrapper = React.createClass({
 		});
 
 		if (filter == "none") {
-			this.setState({
+			var _t2 = this.setState({
 				currentDisplayedQuests: this.state.myQuests[this.state.selectedGameList],
 				currentFilter: filter
 			});
 
-			return;
+			return _t2;
 		}
 
 		var t = this.state.myQuests[this.state.selectedGameList].filter(function (q) {
@@ -8652,17 +8651,20 @@ var MyQuestsWrapper = React.createClass({
 			currentDisplayedQuests: t,
 			currentFilter: filter
 		});
+
+		return t;
 	},
 
 	sortQuestListBy: function sortQuestListBy(typeOfSort) {
-		var t = this.state.currentDisplayedQuests.slice();
+		var t = this.getFilteredQuestList();
 
 		if (typeOfSort == "none") {
 			this.setState({
 				currentDisplayedQuests: this.getFilteredQuestList(),
 				sortType: typeOfSort
 			});
-			return;
+
+			return t;
 		}
 
 		for (var i in t) {
@@ -8696,12 +8698,12 @@ var MyQuestsWrapper = React.createClass({
 			//sets the list the user is going to be adding/removing from
 			selectedGameList: pos,
 
-			//sets the game whose quests the user can pick from
+			// sets the game whose quests the user can pick from
 			selectedGame: game_quests_arr
 		}, function () {
 			this.setState({
-				//sets to no sorting and sets the current displayed list of quests in 
-				//your journal log
+				// sets to `no sorting` and sets the current displayed list of quests in 
+				// your journal log
 				sortType: 'none',
 				currentDisplayedQuests: this.getFilteredQuestList()
 			});
@@ -8711,18 +8713,16 @@ var MyQuestsWrapper = React.createClass({
 	handleUpdateUserQuests: function handleUpdateUserQuests(o) {
 		var obj = JSON.parse(JSON.stringify(o));
 		obj.specialUniqueID = this.state.myQuests[this.state.selectedGameList].length;
-		console.log(obj.specialUniqueID);
 
 		var t = this.state.myQuests.slice();
-		console.log(t);
 		t[this.state.selectedGameList].push(obj);
 
-		var t_filtered = this.getFilteredQuestList();
+		var t_sort_type = this.state.sortType;
 
 		this.setState({
 			myQuests: t,
-			currentDisplayedQuests: t_filtered,
-			sortType: 'none'
+			currentDisplayedQuests: this.sortQuestListBy(t_sort_type),
+			sortType: t_sort_type
 		});
 
 		this.showAddedAlert();
@@ -8739,14 +8739,17 @@ var MyQuestsWrapper = React.createClass({
 
 		if (pos == -1) return;
 
-		if (!t[this.state.selectedGameList][pos].questClear) t[this.state.selectedGameList][pos].questClear = true;else t[this.state.selectedGameList][pos].questClear = false;
+		var quest = t[this.state.selectedGameList][pos];
 
-		var t_filtered = this.getFilteredQuestList();
+		// Toggles Quest Clear
+		if (!quest.questClear) quest.questClear = true;else quest.questClear = false;
+
+		var t_sort_type = this.state.sortType;
 
 		this.setState({
 			myQuests: t,
-			currentDisplayedQuests: t_filtered,
-			sortType: 'none'
+			currentDisplayedQuests: this.sortQuestListBy(t_sort_type),
+			sortType: t_sort_type
 		});
 	},
 
@@ -8757,12 +8760,12 @@ var MyQuestsWrapper = React.createClass({
 
 		t[this.state.selectedGameList].splice(pos, 1);
 
-		var t_filtered = this.getFilteredQuestList();
+		var t_sort_type = this.state.sortType;
 
 		this.setState({
 			myQuests: t,
-			currentDisplayedQuests: t_filtered,
-			sortType: 'none'
+			currentDisplayedQuests: this.sortQuestListBy(t_sort_type),
+			sortType: t_sort_type
 		});
 	},
 
@@ -8803,10 +8806,22 @@ var MyQuestsWrapper = React.createClass({
 					{ className: "name" },
 					quest.name
 				),
-				quest.target,
-				" | ",
-				quest.stars,
-				" \u2606",
+				React.createElement(
+					"span",
+					{ className: "target" },
+					quest.target
+				),
+				React.createElement(
+					"span",
+					{ className: "star-num" },
+					quest.stars,
+					" \u2606"
+				),
+				quest.questClear && React.createElement(
+					"span",
+					{ className: "quest-clear" },
+					"Quest Clear"
+				),
 				React.createElement(
 					"button",
 					{ onClick: this.handleDeleteClick.bind(this, quest) },
@@ -8845,89 +8860,125 @@ var MyQuestsWrapper = React.createClass({
 		return React.createElement(
 			"div",
 			{ id: "main_wrapper" },
+			React.createElement(
+				"h1",
+				{ id: "app_name_top" },
+				"The Hunter's Journal",
+				React.createElement(
+					"p",
+					{ id: "tagline" },
+					" Plan Your Hunts! "
+				)
+			),
 			React.createElement(SidebarComponent, { doClearSearch: this.state.doClearSearch, quests: this.state.selectedGame, handleUpdate: this.handleUpdateUserQuests }),
 			React.createElement(
 				"section",
 				{ id: "user_content_wrapper" },
 				React.createElement(
-					"h1",
-					null,
-					"My Quest Journal"
-				),
-				React.createElement(
 					"div",
 					{ id: "game_select_wrapper" },
 					React.createElement(
-						"button",
-						{ className: this.state.selectedGameList == 0 ? 'selected' : null, onClick: this.handleChangeGame.bind(this, quests, 0) },
-						"Monster Hunter Generations"
-					),
-					React.createElement(
-						"button",
-						{ className: this.state.selectedGameList == 1 ? 'selected' : null, onClick: this.handleChangeGame.bind(this, quests_mh4u, 1) },
-						"Monster Hunter 4 Ultimate"
+						"div",
+						{ id: "game_hero_banner",
+							className: this.state.selectedGameList == 0 ? 'gen-banner' : 'mh4u-banner' },
+						React.createElement(
+							"div",
+							{ id: "games_choice_wrapper" },
+							React.createElement(
+								"button",
+								{ id: "mh4u_choice", className: this.state.selectedGameList == 0 ? 'selected' : null, onClick: this.handleChangeGame.bind(this, quests, 0) },
+								"Monster Hunter Generations"
+							),
+							React.createElement(
+								"button",
+								{ id: "mhgen_choice", className: this.state.selectedGameList == 1 ? 'selected' : null, onClick: this.handleChangeGame.bind(this, quests_mh4u, 1) },
+								"Monster Hunter 4 Ultimate"
+							)
+						),
+						React.createElement(
+							"div",
+							{ id: "filter_options_wrapper" },
+							React.createElement(
+								"button",
+								{ id: "toggle_filter_display",
+									className: this.state.displayFilterOptions == true ? 'selected' : '',
+									onClick: this.toggleFilterOptions },
+								"Filters \u25BC"
+							),
+							React.createElement(
+								"div",
+								{ id: "filter_select_wrapper", className: this.state.displayFilterOptions == true ? 'display' : 'hide' },
+								React.createElement(
+									"div",
+									{ className: "filter_section" },
+									React.createElement(
+										"h3",
+										null,
+										"Select Star Difficulty"
+									),
+									React.createElement(
+										"button",
+										{ className: this.state.currentFilter == "none" ? 'selected' : null, onClick: this.filterQuestList.bind(this, "none") },
+										"All Quests"
+									),
+									React.createElement(
+										"button",
+										{ className: this.state.currentFilter == "0" ? 'selected' : null, onClick: this.filterQuestList.bind(this, "0") },
+										"Training"
+									),
+									elArr
+								),
+								React.createElement(
+									"div",
+									{ className: "filter_section" },
+									React.createElement(
+										"h3",
+										null,
+										"Sort By"
+									),
+									this.state.currentFilter == "none" && React.createElement(
+										"button",
+										{ className: this.state.sortType == "stars" ? 'selected' : null, onClick: this.sortQuestListBy.bind(this, "stars") },
+										"Star Difficulty"
+									),
+									React.createElement(
+										"button",
+										{ className: this.state.sortType == "questIsClear" ? 'selected' : null, onClick: this.sortQuestListBy.bind(this, "questIsClear") },
+										"Quest Cleared"
+									),
+									React.createElement(
+										"button",
+										{ className: this.state.sortType == "none" ? 'selected' : null, onClick: this.sortQuestListBy.bind(this, "none") },
+										"No Sort"
+									)
+								)
+							)
+						)
 					)
 				),
 				React.createElement(
 					"div",
-					{ id: "filter_select_wrapper" },
-					React.createElement(
-						"h3",
-						null,
-						"Select Star Difficulty"
+					{ id: "quest-list-wrapper" },
+					this.state.currentFilter != "none" && React.createElement(
+						"h2",
+						{ className: "filter-star-num" },
+						this.state.currentFilter,
+						" Star Quests"
 					),
-					React.createElement(
+					myQuestsList.length <= 0 ? React.createElement(
+						"div",
+						{ className: "error_message" },
+						"(0) Quests In Journal Log"
+					) : React.createElement(
+						"ul",
+						{ id: "my_game_list", className: "item_list" },
+						myQuestsList
+					),
+					myQuestsList.length > 0 && React.createElement(
 						"button",
-						{ className: this.state.currentFilter == "none" ? 'selected' : null, onClick: this.filterQuestList.bind(this, "none") },
-						"All Quests"
-					),
-					React.createElement(
-						"button",
-						{ className: this.state.currentFilter == "0" ? 'selected' : null, onClick: this.filterQuestList.bind(this, "0") },
-						"Training"
-					),
-					elArr,
-					React.createElement("br", null),
-					React.createElement(
-						"h3",
-						null,
-						"Sort By"
-					),
-					this.state.currentFilter == "none" && React.createElement(
-						"button",
-						{ className: this.state.sortType == "stars" ? 'selected' : null, onClick: this.sortQuestListBy.bind(this, "stars") },
-						"Star Difficulty"
-					),
-					React.createElement(
-						"button",
-						{ className: this.state.sortType == "questIsClear" ? 'selected' : null, onClick: this.sortQuestListBy.bind(this, "questIsClear") },
-						"Quest Cleared"
-					),
-					React.createElement(
-						"button",
-						{ className: this.state.sortType == "none" ? 'selected' : null, onClick: this.sortQuestListBy.bind(this, "none") },
-						"No Sort"
+						{ id: "clear_all_button", onClick: this.handleClearAll },
+						"Clear All"
 					)
-				),
-				this.state.currentFilter != "none" && React.createElement(
-					"h2",
-					null,
-					this.state.currentFilter,
-					" Star Quests"
-				),
-				myQuestsList.length <= 0 ? React.createElement(
-					"div",
-					{ className: "error_message" },
-					"(0) Quests In Journal Log"
-				) : React.createElement(
-					"ul",
-					{ id: "my_game_list", className: "item_list" },
-					myQuestsList
-				),
-				myQuestsList.length > 0 && React.createElement(
-					"button",
-					{ id: "clear_all_button", onClick: this.handleClearAll },
-					"Clear All"
 				)
 			)
 		);
@@ -8973,10 +9024,17 @@ var AllQuestsWrapper = React.createClass({
 					{ className: "name" },
 					quest.name
 				),
-				quest.target,
-				" | ",
-				quest.stars,
-				" \u2606"
+				React.createElement(
+					"span",
+					{ className: "target" },
+					quest.target
+				),
+				React.createElement(
+					"span",
+					{ className: "star-num" },
+					quest.stars,
+					" \u2606"
+				)
 			);
 		}, this);
 
@@ -9070,10 +9128,17 @@ var SearchQuests = React.createClass({
 					{ className: "name" },
 					quest.name
 				),
-				quest.target,
-				" | ",
-				quest.stars,
-				" \u2606"
+				React.createElement(
+					"span",
+					{ className: "target" },
+					quest.target
+				),
+				React.createElement(
+					"span",
+					{ className: "star-num" },
+					quest.stars,
+					" \u2606"
+				)
 			);
 		}, this);
 
@@ -9177,7 +9242,6 @@ var sidebarItemComponent = function sidebarItemComponent(iconImagePath, MyComp, 
 				"div",
 				{ className: "image_icon_wrapper " + (this.props.selected ? 'selected' : null), onClick: this.handleIconClick.bind(this, MyComp, num) },
 				React.createElement("img", { alt: iconImagePath, src: "assets/images/" + iconImagePath }),
-				React.createElement("br", null),
 				React.createElement(
 					"p",
 					null,
@@ -9234,7 +9298,6 @@ var SidebarComponent = React.createClass({
 					"a",
 					{ href: "https://github.com/jM5557/MHQuestJournal" },
 					React.createElement("img", { alt: "jM5557 github repo link icon", src: "assets/images/github-icon-white.png" }),
-					React.createElement("br", null),
 					React.createElement(
 						"p",
 						null,
