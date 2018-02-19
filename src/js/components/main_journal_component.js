@@ -314,18 +314,20 @@ var MyQuestsWrapper = React.createClass({
 				The Hunter's Journal
 				<p id = "tagline"> Plan Your Hunts! </p>
 			</h1>
+
+			<div id = "games_choice_wrapper">
+				<button id = "mhgen_choice" className = {this.state.selectedGameList == 0 ? 'selected' : null} onClick = { this.handleChangeGame.bind(this, quests, 0) }>Monster Hunter Generations</button>
+				<button id = "mh4u_choice" className = {this.state.selectedGameList == 1 ? 'selected' : null} onClick = {this.handleChangeGame.bind(this, quests_mh4u, 1) }>Monster Hunter 4 Ultimate</button>
+			</div>
 			
 			<SidebarComponent doClearSearch = { this.state.doClearSearch } quests = { this.state.selectedGame } handleUpdate = {this.handleUpdateUserQuests}/>
-			
+
 			<section id = "user_content_wrapper">
 				<div id = "game_select_wrapper">
 					<div id = "game_hero_banner"
 						className = {this.state.selectedGameList == 0 ? 'gen-banner' : 'mh4u-banner'}>
 
-						<div id = "games_choice_wrapper">
-							<button id = "mh4u_choice" className = {this.state.selectedGameList == 0 ? 'selected' : null} onClick = { this.handleChangeGame.bind(this, quests, 0) }>Monster Hunter Generations</button>
-							<button id = "mhgen_choice" className = {this.state.selectedGameList == 1 ? 'selected' : null} onClick = {this.handleChangeGame.bind(this, quests_mh4u, 1) }>Monster Hunter 4 Ultimate</button>
-						</div>
+						
 						<div id = "filter_options_wrapper">
 							<button id = "toggle_filter_display"
 								className = {this.state.displayFilterOptions == true ? 'selected' : ''} 

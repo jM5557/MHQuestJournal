@@ -8870,6 +8870,20 @@ var MyQuestsWrapper = React.createClass({
 					" Plan Your Hunts! "
 				)
 			),
+			React.createElement(
+				"div",
+				{ id: "games_choice_wrapper" },
+				React.createElement(
+					"button",
+					{ id: "mhgen_choice", className: this.state.selectedGameList == 0 ? 'selected' : null, onClick: this.handleChangeGame.bind(this, quests, 0) },
+					"Monster Hunter Generations"
+				),
+				React.createElement(
+					"button",
+					{ id: "mh4u_choice", className: this.state.selectedGameList == 1 ? 'selected' : null, onClick: this.handleChangeGame.bind(this, quests_mh4u, 1) },
+					"Monster Hunter 4 Ultimate"
+				)
+			),
 			React.createElement(SidebarComponent, { doClearSearch: this.state.doClearSearch, quests: this.state.selectedGame, handleUpdate: this.handleUpdateUserQuests }),
 			React.createElement(
 				"section",
@@ -8881,20 +8895,6 @@ var MyQuestsWrapper = React.createClass({
 						"div",
 						{ id: "game_hero_banner",
 							className: this.state.selectedGameList == 0 ? 'gen-banner' : 'mh4u-banner' },
-						React.createElement(
-							"div",
-							{ id: "games_choice_wrapper" },
-							React.createElement(
-								"button",
-								{ id: "mh4u_choice", className: this.state.selectedGameList == 0 ? 'selected' : null, onClick: this.handleChangeGame.bind(this, quests, 0) },
-								"Monster Hunter Generations"
-							),
-							React.createElement(
-								"button",
-								{ id: "mhgen_choice", className: this.state.selectedGameList == 1 ? 'selected' : null, onClick: this.handleChangeGame.bind(this, quests_mh4u, 1) },
-								"Monster Hunter 4 Ultimate"
-							)
-						),
 						React.createElement(
 							"div",
 							{ id: "filter_options_wrapper" },
