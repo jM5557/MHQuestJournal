@@ -1,6 +1,6 @@
 //List of different quest data arrays being used 
 var quest_lists = [
-	quests,
+	quests_mhgen,
 	quests_mh4u,
 	quests_MHGU
 ];
@@ -180,7 +180,9 @@ var MyQuestsWrapper = React.createClass({
 				// sets to `no sorting` and sets the current displayed list of quests in 
 				// your journal log
 				sortType: 'none',
-				currentDisplayedQuests: this.getFilteredQuestList()
+				currentDisplayedQuests: this.getFilteredQuestList(),
+				doClearSearch: false,
+				clearSearch: false
 			});
 		});
 	},
@@ -268,6 +270,18 @@ var MyQuestsWrapper = React.createClass({
 			currentDisplayedQuests: [],
 			sortType:'none'
 		});
+	},
+
+	getClearedQuests: function () {
+		return this.state.currentDisplayedQuests.filter((q) => {
+			return q.questClear == true;
+		});
+	},
+
+	getNumOfClearedQuests: function () {
+
+		return this.getClearedQuests().length;
+
 	},
 
 	render : function () {
@@ -372,6 +386,7 @@ var MyQuestsWrapper = React.createClass({
 					</div>
 				</div>
 				<div id = "quest-list-wrapper">
+					<h2>Quests Cleared: {this.getNumOfClearedQuests() + '/' + this.state.currentDisplayedQuests.length} </h2>
 					{this.state.currentFilter != "none" && <h2 className = "filter-star-num">{this.state.currentFilter} Star Quests</h2>}
 					{myQuestsList.length <= 0 ? 
 						(<div className = "error_message">(0) Quests In Journal Log</div>)

@@ -1,5 +1,5 @@
 // mhgen.quests
-var quests = {
+var quests_mhgen = {
  "quests" : [{
     "_id": "101",
     "name": "Find the Ferns",

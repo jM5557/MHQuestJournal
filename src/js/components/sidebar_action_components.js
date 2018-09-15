@@ -1,4 +1,4 @@
-// Quest Databases for MH Gen and MH4U borrowed from https://github.com/gatheringhallstudios/MHGenDatabase 
+// Quest Databases for MH Gen and MH4U sourced from https://github.com/gatheringhallstudios/MHGenDatabase 
 // and https://github.com/kamegami13/MonsterHunter4UDatabase respectively
 
 var AllQuestsWrapper = React.createClass({
@@ -125,8 +125,9 @@ var SearchQuests = React.createClass({
 
 		if(this.props.doClearSearch){
 			this.clearSearch();
-			this.props.doClearSearch = false;
 		}
+
+		console.log(this.props.doClearSearch + ": " + this.state.doClearSearch)
 
 		return (	
 					<div id = "search_wrapper">

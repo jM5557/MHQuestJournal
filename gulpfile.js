@@ -7,7 +7,6 @@ const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 const cleanCSS = require('gulp-clean-css');
 const concat = require('gulp-concat');
-const tinypng = require('gulp-tinypng');
 const autoprefix = require('gulp-autoprefixer');
  
 gulp.task('compress', function (cb) {
@@ -43,7 +42,6 @@ gulp.task("js", function () {
 
 gulp.task("img", function () {
 	return gulp.src('./src/images/**/*.jpg')
-		.pipe(tinypng('pq30rinq_UbtmqacchG8DQnw-hlYVcgM'))
 		.pipe(gulp.dest('./dist/assets/images'));
 });
 
