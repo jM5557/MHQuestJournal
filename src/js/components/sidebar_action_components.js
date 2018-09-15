@@ -153,20 +153,16 @@ var SearchQuests = React.createClass({
 var ResourcesWrapper = React.createClass({
 	render : function () {
 		let res_list = [{
-			"name": "/r/MonsterHunter",
-			"url": "https://reddit.com/r/MonsterHunter"
+			"name": "MHGU Database App",
+			"url": "https://play.google.com/store/apps/details?id=com.ghstudios.android.mhgendatabase&hl=en"
 		},
 		{
-			"name": "Kiranico",
-			"url": "http://kiranico.com"
+			"name": "MHWorld Database App",
+			"url": "https://play.google.com/store/apps/details?id=com.gatheringhallstudios.mhworlddatabase"
 		},
 		{
-			"name": "Monster Hunter Wikia",
-			"url": "https://monsterhunter.wikia.com"
-		},
-		{
-			"name": "Athena's Armor S. S. | Download Page",
-			"url": "https://www.mediafire.com/folder/4o1idj7mmtn85/Monster_Hunter"
+			"name": "MH4U Database App",
+			"url": "https://github.com/kamegami13/MonsterHunter4UDatabase/releases"
 		}];
 
 		let res_list_el = res_list.map(function (i) {
@@ -175,10 +171,12 @@ var ResourcesWrapper = React.createClass({
 
 		return (
 			<div>
-				<h1>Useful Resources</h1>
-				<ol>
+				<h1>Data obtained from the GatheringHallStudios team.</h1>
+				<h2>Check out their Android Apps!</h2>
+
+				<ul>
 					{ res_list_el }
-				</ol>
+				</ul>
 			</div>
 		);
 	}

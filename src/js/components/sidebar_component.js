@@ -16,7 +16,7 @@ var sidebarItemComponent = function (iconImagePath, MyComp, label, num) {
 
 var ItemOneWrapper = sidebarItemComponent("search_icon.png", SearchQuests, "Search For Quests", 1);
 var ItemTwoWrapper = sidebarItemComponent("quest_icon.png", AllQuestsWrapper, "View All Quests", 2);
-var ItemThreeWrapper = sidebarItemComponent("map_icon.png", ResourcesWrapper, "Useful Resources", 3);
+var ItemThreeWrapper = sidebarItemComponent("map_icon.png", ResourcesWrapper, "Database Apps", 3);
 
 var SidebarComponent = React.createClass({
 	getInitialState : function () {

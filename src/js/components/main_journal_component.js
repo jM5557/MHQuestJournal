@@ -1,39 +1,53 @@
+//List of different quest data arrays being used 
+var quest_lists = [
+	quests,
+	quests_mh4u,
+	quests_MHGU
+];
+
 //MAIN Component
 var MyQuestsWrapper = React.createClass({
 	getInitialState : function () {
-		if(JSON.parse(localStorage.getItem("mh_quest_journal_react")) === null)
+		if(JSON.parse(localStorage.getItem("mh_quest_journal_react")) === null )
 			return { 
-				"myQuests" : [[], []], 
-				"selectedGame" : quests, 
-				"selectedGameList" : 0,
+				"myQuests" : quest_lists.map(() => { return [] } ), 
+				"selectedGame" : quest_lists[quest_lists.length - 1], 
+				"selectedGameList" : quest_lists.length - 1,
 				"doClearSearch": false,
 				"currentDisplayedQuests": [],
 				"currentFilter": "none",
-				"displayFilterOptions": false
+				"displayFilterOptions": false,
+				"updatedLocalStorage": true
 			};
 
 		// Gets stored quest list if they exist
 		var m = JSON.parse(localStorage.getItem("mh_quest_journal_react"));
 
-		// Assigns an id to each quest in each list
-		//
-		// m[0] is the MH Gen quest list 
-		for(let i in m[0]){
-			m[0][i].specialUniqueID = i;
+		for (let i = 0; i < quest_lists.length; i++) {
+
+			for (let j in m[i]) {
+
+				m[i][j].specialUniqueID = j;
+
+			}
+
 		}
-		// m[1] is the MH4U quest list
-		for(let i in m[1]){
-			m[1][i].specialUniqueID = i;
+
+		// Make a new array if the user doesn't have one
+		// for the latest game added to the `quest_lists` 
+		if (typeof m[quest_lists.length - 1] === "undefined") {
+			m.push(new Array());
 		}
 
 		return { 
 			"myQuests" : m,
-			"selectedGame" : quests,
-			"selectedGameList" : 0,
+			"selectedGame" : quest_lists[quest_lists.length - 1],
+			"selectedGameList" : quest_lists.length - 1,
 			"doClearSearch" : false,
-			"currentDisplayedQuests": m[0],
+			"currentDisplayedQuests": m[quest_lists.length - 1],
 			"currentFilter": "none",
-			"displayFilterOptions": false
+			"displayFilterOptions": false,
+			"updatedLocalStorage": false
 		 };
 	},
 
@@ -204,10 +218,7 @@ var MyQuestsWrapper = React.createClass({
 		let quest = t[this.state.selectedGameList][pos];
 
 		// Toggles Quest Clear
-		if(!quest.questClear)
-			quest.questClear = true;
-		else
-			quest.questClear = false;
+		quest.questClear = !quest.questClear;
 
 		let t_sort_type = this.state.sortType;
 
@@ -316,8 +327,9 @@ var MyQuestsWrapper = React.createClass({
 			</h1>
 
 			<div id = "games_choice_wrapper">
-				<button id = "mhgen_choice" className = {this.state.selectedGameList == 0 ? 'selected' : null} onClick = { this.handleChangeGame.bind(this, quests, 0) }>Monster Hunter Generations</button>
-				<button id = "mh4u_choice" className = {this.state.selectedGameList == 1 ? 'selected' : null} onClick = {this.handleChangeGame.bind(this, quests_mh4u, 1) }>Monster Hunter 4 Ultimate</button>
+			    <button id = "mhgu_choice" className = {this.state.selectedGameList == 2 ? 'selected' : null} onClick = { this.handleChangeGame.bind(this, quest_lists[2], 2) }> Monster Hunter Generations Ultimate</button>
+				<button id = "mhgen_choice" className = {this.state.selectedGameList == 0 ? 'selected' : null} onClick = { this.handleChangeGame.bind(this, quest_lists[0], 0) }>Monster Hunter Generations</button>
+				<button id = "mh4u_choice" className = {this.state.selectedGameList == 1 ? 'selected' : null} onClick = {this.handleChangeGame.bind(this, quest_lists[1], 1) }>Monster Hunter 4 Ultimate</button>
 			</div>
 			
 			<SidebarComponent doClearSearch = { this.state.doClearSearch } quests = { this.state.selectedGame } handleUpdate = {this.handleUpdateUserQuests}/>

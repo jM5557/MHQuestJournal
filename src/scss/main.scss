@@ -184,8 +184,7 @@ button#toggle_filter_display {
 	margin: 10px auto 0px auto;
 	text-align: right;
 
-	#mh4u_choice, 
-	#mhgen_choice {
+	button {
 		display: inline-block;
 		padding: 14px 14px;
 		background-color: #423c39;
@@ -210,13 +209,14 @@ button#toggle_filter_display {
 
 			&,&:focus {
 				outline: none;
-				border: solid 2px #862931;
+				background-color: #1b1715;
 			}
 
 		}
 
 		&:hover {
-			border: solid 2px #2c572c;
+			background-color: #1b1715;
+			opacity: 0.75;
 		}
 	}
 }
@@ -378,11 +378,22 @@ button#toggle_filter_display {
 		background-color: #282623;
 	}
 	
-	h1 {
-		font-size: 1.95rem;
+	h1, h2 {
 		max-width: 1080px;
 		margin: auto auto 15px auto;
 		text-align: left;
+	}
+
+	h1 {
+
+		font-size: 1.95rem;
+		font-weight: bold;
+	}
+
+	h2 {
+
+		font-size: 1.25rem;
+
 	}
 
 	input[type="text"] {
@@ -403,15 +414,15 @@ button#toggle_filter_display {
 		}
 	}
 
-	ol {
-		list-style-type: decimal;
-		max-width: 970px;
-		width: 90%;
+	ul {
+		list-style-type: none;
+		max-width: 1080px;
+		width: 100%;
 		margin: auto;
 		display: block;
 	}
 
-	ol li {
+	ul li {
 
 		a {
 			display: block;
