@@ -1,5 +1,6 @@
 // mhgen.quests
 var quests_mhgen = {
+ "name": "Monster Hunter Generations",
  "quests" : [{
     "_id": "101",
     "name": "Find the Ferns",

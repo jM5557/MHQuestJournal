@@ -1,5 +1,6 @@
 // mh4u.quests
 var quests_mh4u = {
+    "name": "Monster Hunter 4 Ultimate",
 	"quests" : [{
     "_id": "1",
     "name": "Steak Your Ground",

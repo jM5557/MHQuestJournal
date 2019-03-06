@@ -46,7 +46,7 @@ var SidebarComponent = React.createClass({
 	},
 
 	render : function () {
-		return (<section id = "display_quests_container">
+		return (<section id = "sidebar">
 
 			<ItemOneWrapper selected = { (this.state.selectedButton == 1) ? true : false} handleIconClick = {this.handleIconClick} />
 			<ItemTwoWrapper selected = { (this.state.selectedButton == 2) ? true : false} handleIconClick = {this.handleIconClick} />

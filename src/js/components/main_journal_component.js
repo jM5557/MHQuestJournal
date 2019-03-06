@@ -17,7 +17,8 @@ var MyQuestsWrapper = React.createClass({
 				"currentDisplayedQuests": [],
 				"currentFilter": "none",
 				"displayFilterOptions": false,
-				"updatedLocalStorage": true
+				"updatedLocalStorage": true,
+				"displaySidebar": false
 			};
 
 		// Gets stored quest list if they exist
@@ -47,7 +48,8 @@ var MyQuestsWrapper = React.createClass({
 			"currentDisplayedQuests": m[quest_lists.length - 1],
 			"currentFilter": "none",
 			"displayFilterOptions": false,
-			"updatedLocalStorage": false
+			"updatedLocalStorage": false,
+			"displaySidebar": false
 		 };
 	},
 
@@ -335,33 +337,42 @@ var MyQuestsWrapper = React.createClass({
 
 		return (
 		<div id = "main_wrapper">
-			<h1 id = "app_name_top">
-				The Hunter's Journal
-				<p id = "tagline"> Plan Your Hunts! </p>
-			</h1>
-
-			<div id = "games_choice_wrapper">
-			    <button id = "mhgu_choice" className = {this.state.selectedGameList == 2 ? 'selected' : null} onClick = { this.handleChangeGame.bind(this, quest_lists[2], 2) }> Monster Hunter Generations Ultimate</button>
-				<button id = "mhgen_choice" className = {this.state.selectedGameList == 0 ? 'selected' : null} onClick = { this.handleChangeGame.bind(this, quest_lists[0], 0) }>Monster Hunter Generations</button>
-				<button id = "mh4u_choice" className = {this.state.selectedGameList == 1 ? 'selected' : null} onClick = {this.handleChangeGame.bind(this, quest_lists[1], 1) }>Monster Hunter 4 Ultimate</button>
-			</div>
 			
-			<SidebarComponent doClearSearch = { this.state.doClearSearch } quests = { this.state.selectedGame } handleUpdate = {this.handleUpdateUserQuests}/>
+			{ (this.state.displaySidebar) &&
+				<SidebarComponent doClearSearch = { this.state.doClearSearch } quests = { this.state.selectedGame } handleUpdate = {this.handleUpdateUserQuests}/>
+			}
 
-			<section id = "user_content_wrapper">
+			<section id = "main_content" className={ (this.state.displaySidebar) ? 'open_side' : '' }>
+
+				<div id = "games_choice_wrapper">
+					<button id = "menu_btn" onClick={ ()=> { this.setState({ displaySidebar: !this.state.displaySidebar }) } }>{ (this.state.displaySidebar) ? " ☰ Hide Menu" : " ☰ Menu" }</button>
+
+				    <button id = "mhgu_choice" className = {this.state.selectedGameList == 2 ? 'selected' : null} onClick = { this.handleChangeGame.bind(this, quest_lists[2], 2) }> MHGU </button>
+					<button id = "mhgen_choice" className = {this.state.selectedGameList == 0 ? 'selected' : null} onClick = { this.handleChangeGame.bind(this, quest_lists[0], 0) }> MHGen </button>
+					<button id = "mh4u_choice" className = {this.state.selectedGameList == 1 ? 'selected' : null} onClick = {this.handleChangeGame.bind(this, quest_lists[1], 1) }> MH4U </button>
+				</div>
+
+				<div id = "app_name_top">
+					<h2>{ quest_lists[this.state.selectedGameList].name }</h2>
+					
+					<h1>
+						The Hunter's Journal
+						<p id = "tagline"> Plan Your Hunts! </p>
+					</h1>
+				</div>
+				
 				<div id = "game_select_wrapper">
-					<div id = "game_hero_banner"
-						className = {this.state.selectedGameList == 0 ? 'gen-banner' : 'mh4u-banner'}>
 
-						
 						<div id = "filter_options_wrapper">
+							<h2>Quests Cleared: {this.getNumOfClearedQuests() + '/' + this.state.currentDisplayedQuests.length} </h2>
 							<button id = "toggle_filter_display"
 								className = {this.state.displayFilterOptions == true ? 'selected' : ''} 
 								onClick = {this.toggleFilterOptions}>
 								Filters &#x25BC;
 							</button>
+						</div>
 
-							<div id = "filter_select_wrapper" className = {this.state.displayFilterOptions == true ? 'display' : 'hide'}>
+						<div id = "filter_select_wrapper" className = {this.state.displayFilterOptions == true ? 'display' : 'hide'}>
 								<div className = "filter_section">	
 									<h3>Select Star Difficulty</h3>
 									
@@ -382,12 +393,16 @@ var MyQuestsWrapper = React.createClass({
 									<button className = {this.state.sortType == "none" ? 'selected' : null} onClick = { this.sortQuestListBy.bind(this, "none")}>No Sort</button>
 								</div>
 							</div>
-						</div>
-					</div>
 				</div>
+
 				<div id = "quest-list-wrapper">
-					<h2>Quests Cleared: {this.getNumOfClearedQuests() + '/' + this.state.currentDisplayedQuests.length} </h2>
-					{this.state.currentFilter != "none" && <h2 className = "filter-star-num">{this.state.currentFilter} Star Quests</h2>}
+
+					{ this.state.currentFilter != "none" && 
+						<h2 className = "filter-star-num">
+							{this.state.currentFilter} Star Quests
+						</h2>
+					}
+					
 					{myQuestsList.length <= 0 ? 
 						(<div className = "error_message">(0) Quests In Journal Log</div>)
 						: (<ul id = "my_game_list" className = "item_list">{ myQuestsList }</ul>)

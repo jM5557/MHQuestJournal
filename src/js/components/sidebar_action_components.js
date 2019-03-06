@@ -39,7 +39,7 @@ var AllQuestsWrapper = React.createClass({
 		return (
 			<div>
 				<h1>All Quests</h1>
-				<ul className = "item_list">{ listQuests }</ul>
+				<ul className = "item_list search">{ listQuests }</ul>
 			</div>
 		);
 	}
@@ -142,7 +142,7 @@ var SearchQuests = React.createClass({
 								Clear All Search Results
 							</button>
 						}
-						<ul className = "item_list">
+						<ul className = "item_list search">
 							{ listResultQuests }
 						</ul>
 					</div>

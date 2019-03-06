@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css?family=Crimson+Text');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+$sidebarWidth: 400px;
+
 body { 
 	background: url("../images/bg_3.jpg") repeat center center;
 	background-color: #4d453c;
@@ -48,14 +50,14 @@ h2 {
 }
 
 .error_message {
-	color: red;
+	color: #b13f3f;
 }
 
 .image_icon_wrapper {
-	display: inline-block;
-	margin: 5px 15px;
-	cursor: pointer;
-	padding: 7px 8px;
+	display: block;
+    margin: auto auto;
+    cursor: pointer;
+    padding: 14px 0 14px 10px;
 
 	&, a, a:visited {
 		color: #fefefe;
@@ -74,48 +76,29 @@ h2 {
 
 	img {
 		max-width: 45px;
+		margin-left: 25px;
+		margin-right: 15px;
 	}
 
 	p {
-
+		font-size: 1.35rem;
 	}
 
 	@media all and (max-width: 1120px) {
-		margin: 20px 5px 20px 5px;
-
-		img {
-			max-width: 40px;
-		}
+		
 	}
 
 	@media all and (max-width: 720px) {
-		font-size: 12pt;
-
-		img, p {
-			display: block;
-			margin: 5px auto;
-		}
-
-		img {
-			max-width: 35px;
-		}
+		
 	}
 
 	@media all and (max-width: 550px) {
-		font-size: 9pt;
+		
 	}
 
 
 	@media all and (max-width: 425px) {
-		margin: 10px 15px;
-
-		p {
-			display: none;
-		}
-
-		img {
-			max-width: 40px;
-		}
+		
 	}
 }
 
@@ -152,23 +135,32 @@ h2 {
 }
 
 #app_name_top {
-	position: absolute;
-	top: 20px;
-	left: 10px;
-	font-size: 1.65rem;
+	padding: 15px 20px;
+
+	@media all and (max-width: 720px) {
+		padding-top: 70px;
+	}
+
+	h2 {
+		font-family: 'Roboto', sans-serif;
+		font-size: 0.95rem;
+		text-transform: lowercase;
+		letter-spacing: 2.5px;
+		padding-bottom: 5px;
+	}
+
+	h1 {
+		font-size: 2.25rem;
+	}
+	
 
 	p {
 		font-size: 1.15rem;
 		padding-top: 5px;
-		padding-left: 8px;
 	}
 
 	@media all and (max-width: 1120px) {
-		display: block;
-		position: relative;
-		top: auto;
-		left: auto;
-		padding: 15px;
+		
 	}
 }
 
@@ -181,35 +173,31 @@ button#toggle_filter_display {
 
 #games_choice_wrapper {
 	display: block;
-	margin: 10px auto 0px auto;
-	text-align: right;
+    margin: 0 auto 0 auto;
+    text-align: right;
+    background-color: #1f1c1a;
+    padding: 8px 10px;
+    clear: both;
+    overflow: auto;
 
 	button {
 		display: inline-block;
-		padding: 14px 14px;
-		background-color: #423c39;
-		margin: 5px;
-		position: relative;
-		color: #fefefe;
-		font-size: 1.05rem;
-		z-index: 3;
-
-		@media all and (max-width: 1080px) {
-		}
-
-		@media all and (max-width: 640px) {
-			display: block;
-			font-size: 1.12rem;
-			margin: 5px auto;
-			width: 75%;
-			padding: 18px 15px;
-		}
+	    padding: 10px 10px;
+	    background-color: transparent;
+	    margin: auto 2.5px;
+	    position: relative;
+	    color: #fefefe;
+	    font-size: .75rem;
+	    letter-spacing: 1.25px;
+	    z-index: 3;
+	    border-radius: 2.5px;
+		
 
 		&.selected {
 
 			&,&:focus {
 				outline: none;
-				background-color: #1b1715;
+				background-color: #b5480d;
 			}
 
 		}
@@ -219,9 +207,37 @@ button#toggle_filter_display {
 			opacity: 0.75;
 		}
 	}
+
+	#menu_btn {
+		float: left;
+	}
+
+	@media all and (max-width: 720px) {
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		right: 0px;
+	}
 }
 
-#game_select_wrapper {
+#filter_options_wrapper {
+	clear: both;
+	display: block;
+	overflow: auto;
+	padding-left: 15px;
+	padding-right: 15px;
+	box-sizing: border-box;
+
+	h2 {
+		float: left;
+	    display: block;
+	    margin: 17px auto;
+	}
+
+	#toggle_filter_display {
+		float: right;
+	}
+
 	button {
 		
 
@@ -288,7 +304,6 @@ button#toggle_filter_display {
 		.name {
 			font-size: 1.65rem;
 			font-family: 'Crimson Text', serif;
-			margin-bottom: 8px;
 		}
 
 		.target, .star-num {
@@ -296,11 +311,14 @@ button#toggle_filter_display {
 		}
 
 		.star-num, .quest-clear {
-			padding: 2.5px 5px;
+			padding: 3px 12px;
 			margin-top: 7px;
 			margin-left: 5px;
 			border-radius: 2px;
-
+			border-radius: 30px;
+    		font-weight: bolder;
+    		box-shadow: 0px 3px 15px -5px #111;
+    		display: inline-block;
 		}
 
 		.target {
@@ -308,11 +326,13 @@ button#toggle_filter_display {
 		}
 
 		.star-num {
-			background-color: orange;
+			background-color: #eac01d;
+    		color: #63521a;
 		}
 
 		.quest-clear {
-			background-color: crimson;
+			background-color: #dc143c;
+    		color: #481313;
 		}
 
 		button {
@@ -331,16 +351,17 @@ button#toggle_filter_display {
 	}
 
 	@media all and (max-width: 720px) {
+		
+	}
+
+	&.search {
 		li {
-			padding: 15px 10px;
+			padding: 10px 8px;
+    		margin: 2.5px auto;
+    		max-width: unset;
 
 			.name {
-				font-size: 1.35rem;
-			}
-
-			.target {
-				display: block;
-				margin-bottom: 15px;
+				font-size: 1.10rem;
 			}
 		}
 	}
@@ -369,7 +390,7 @@ button#toggle_filter_display {
 	text-align: center;
 	max-width: 100%;
 	display: block;
-	padding: 55px 30px;
+	padding: 55px 16px;
 	background-color: #383430;
 	opacity: 0.85;
 	position: relative;
@@ -398,14 +419,16 @@ button#toggle_filter_display {
 
 	input[type="text"] {
 		margin: 15px auto;
-		padding: 10px 6px;
-		background-color: #fefefe;
-		border: none;
-		border-radius: 2px;
-		display: block;
-		width: 75%;
-		max-width: 500px;
-		text-align: center;
+	    padding: 10px 6px;
+	    background-color: #fefefe;
+	    border: none;
+	    border-radius: 2px;
+	    display: block;
+	    width: 100%;
+	    max-width: 500px;
+	    text-align: center;
+	    box-sizing: border-box;
+	    font-size: 1.05rem;
 
 		&:focus {
 			text-align: left;
@@ -510,21 +533,56 @@ button#toggle_filter_display {
 	}
 }
 
+#sidebar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	overflow-y: auto;	
+	width: $sidebarWidth;
+	box-sizing: border-box;
+	background-color: #23221f;
+
+	@media all and (max-width: 720px) {
+		top: 48px;
+	    right: 0;
+	    position: fixed;
+	    width: auto;
+	    z-index: 9999;
+	}
+}
+
+#main_content {
+	min-height: 100vh;
+	box-sizing: border-box;
+
+	&.open_side {
+		margin-left: $sidebarWidth;
+
+		@media all and (max-width: 720px) {
+			margin-left: auto;
+		}
+	}
+}
+
 #filter_options_wrapper {
 	max-width: 1080px;
 	width: 100%;
 	display: block;
 	color: #fefefe;
-	margin: 15px auto;
+	margin: 0px auto 15px auto;
 
 	#toggle_filter_display {
 		color: #fefefe;
 		margin: 10px 5px;
-		font-size: 1.10rem;
-
+	    font-size: 1.1rem;
+	    background-color: #23221f;
+	    border-radius: 85px;
+	    padding: 5px 16px;
 	}
+}
 
-	.filter_section {
+.filter_section {
 		margin: 25px;
 
 		h3 {
@@ -559,20 +617,23 @@ button#toggle_filter_display {
 			}
 		}
 	}
+
+.notice {
+	text-align: left;
+	font-size: 0.85rem;
+	line-height: 18px;
 }
 
 footer {
 	background: url('../images/felyne-art.png') no-repeat center top 25px;
-	background-size: 300px auto;
-	background-color: #6f5b4a;
-	margin-top: 35px;
-	margin-bottom: 20px;
-	padding: 180px 15px 30px 15px;
-	max-width: 720px;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-	font-size: 0.85rem;
+	background-size: 240px auto;
+    background-color: #6f5b4a;
+    margin-top: 35px;
+    padding: 180px 15px 30px 15px;
+    margin-left: $sidebarWidth;
+    margin-right: auto;
+    text-align: center;
+    font-size: .85rem;
 
 	strong {
 		color: orange;

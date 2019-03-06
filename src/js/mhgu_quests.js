@@ -1,5 +1,5 @@
 var quests_MHGU = {
-
+"name": "Monster Hunter Generations Ultimate",
 "quests": [
   {
     "_id": 101,
